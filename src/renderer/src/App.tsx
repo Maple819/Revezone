@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { lazy, useCallback, useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { langCodeAtom } from './store/jotai';
@@ -9,6 +10,7 @@ import { ConfigProvider, message } from 'antd';
 import { theme } from './utils/theme';
 import { getOSName, isInRevezoneApp } from './utils/navigator';
 import ResizableLayout from './components/ResizableLayout/index';
+import OpacitySliderComponent from '@renderer/components/OpacitySlider/index';
 import useAddFile from '@renderer/hooks/useAddFile';
 import useTabJsonModel from '@renderer/hooks/useTabJsonModel';
 
@@ -123,13 +125,13 @@ function App(): JSX.Element {
     return (
         <ConfigProvider locale={getLocale()} theme={theme}>
             <div
-                className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${
-                    isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
-                }`}
+                className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
+                    }`}
             >
                 <ResizableLayout>
                     <WorkspaceLoaded>
-                        <MultiTabs />
+                        {/* <MultiTabs /> */}
+                        <OpacitySliderComponent />
                     </WorkspaceLoaded>
                 </ResizableLayout>
             </div>

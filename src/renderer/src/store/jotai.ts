@@ -28,6 +28,7 @@ export const langCodeAtom = atom('en');
 export const themeAtom = atom<Theme>('light');
 
 export const tabJsonModelAtom = atom<IJsonModel>(DEFAULT_TAB_JSON_MODEL);
+
 export const tabModelAtom = atom<Model | undefined>(undefined);
 
 export const selectedKeysAtom = atom<string[]>(getSelectedKeysFromLocal());

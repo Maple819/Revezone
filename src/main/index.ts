@@ -207,6 +207,14 @@ function createWindow(): BrowserWindow {
         }
     );
 
+    ipcMain.on(EVENTS.changeWindowOpacity, (event, opacity: number) => {
+        if (mainWindow) {
+            // 确保透明度在0.2到1之间
+            const newOpacity = Math.min(Math.max(opacity, 0.2), 1);
+            mainWindow.setOpacity(newOpacity);
+        }
+    });
+
     return mainWindow;
 }
 

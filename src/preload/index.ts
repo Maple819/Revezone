@@ -38,7 +38,8 @@ const api = {
     openFileSuccess: (cb: Callback) => ipcRenderer.on(EVENTS.openFileSuccess, cb),
     openRevezoneLinkSuccess: (cb: Callback) => ipcRenderer.on(EVENTS.openRevezoneLinkSuccess, cb),
     removeAllRevezoneLinkListeners: () =>
-        ipcRenderer.removeAllListeners(EVENTS.openRevezoneLinkSuccess)
+        ipcRenderer.removeAllListeners(EVENTS.openRevezoneLinkSuccess),
+    changeWindowOpacity: (value) => ipcRenderer.send(EVENTS.changeWindowOpacity, value)
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
