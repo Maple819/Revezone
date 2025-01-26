@@ -8,54 +8,54 @@ import useDoubleLink from '@renderer/hooks/useDoubleLink';
 import './index.css';
 
 interface Props {
-  file: RevezoneFile;
+    file: RevezoneFile;
 }
 
 function NoteEditor({ file }: Props): JSX.Element | null {
-  const { onLinkOpen, tabModel, fileTree } = useDoubleLink(false);
-  const editorDomRef = useRef<HTMLDivElement>(null);
-  const editorRef = useRef<RevezoneBlockSuiteEditor>();
-  const editorMountRef = useRef(false);
+    const { onLinkOpen, tabModel, fileTree } = useDoubleLink(false);
+    const editorDomRef = useRef<HTMLDivElement>(null);
+    const editorRef = useRef<RevezoneBlockSuiteEditor>();
+    const editorMountRef = useRef(false);
 
-  if (!file) {
-    return null;
-  }
-
-  useEffect(() => {
-    if (!file || editorMountRef.current) {
-      return;
+    if (!file) {
+        return null;
     }
 
-    editorMountRef.current = true;
+    useEffect(() => {
+        if (!file || editorMountRef.current) {
+            return;
+        }
 
-    // let editor: RevezoneBlockSuiteEditor | undefined;
+        editorMountRef.current = true;
 
-    if (editorDomRef.current) {
-      editorRef.current = new RevezoneBlockSuiteEditor({
-        pageId: file.id,
-        onLinkOpen
-      });
+        // let editor: RevezoneBlockSuiteEditor | undefined;
 
-      editorDomRef.current.innerHTML = '';
+        if (editorDomRef.current) {
+            editorRef.current = new RevezoneBlockSuiteEditor({
+                pageId: file.id,
+                onLinkOpen
+            });
 
-      editorDomRef.current?.appendChild(editorRef.current);
+            editorDomRef.current.innerHTML = '';
 
-      // @ts-ignore TEST
-      window.editor = editor;
-    }
+            editorDomRef.current?.appendChild(editorRef.current);
 
-    return () => {
-      editorRef.current && editorDomRef.current?.removeChild(editorRef.current);
-      editorRef.current = undefined;
-      editorMountRef.current = false;
-    };
-  }, [file.id, tabModel, fileTree, onLinkOpen]);
+            // @ts-ignore TEST
+            window.editor = editor;
+        }
 
-  useEffect(() => {
-    editorMountRef.current = false;
-  }, [file.id]);
+        return () => {
+            editorRef.current && editorDomRef.current?.removeChild(editorRef.current);
+            editorRef.current = undefined;
+            editorMountRef.current = false;
+        };
+    }, [file.id, tabModel, fileTree, onLinkOpen]);
 
-  return <div className="blocksuite-editor-container" ref={editorDomRef}></div>;
+    useEffect(() => {
+        editorMountRef.current = false;
+    }, [file.id]);
+
+    return <div className="blocksuite-editor-container" ref={editorDomRef}></div>;
 }
 
 export default NoteEditor;

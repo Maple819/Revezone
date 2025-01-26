@@ -2,9 +2,9 @@ import { atom } from 'jotai';
 import { IJsonModel, Layout, Model, ITabRenderValues } from 'flexlayout-react';
 import { RevezoneFile, RevezoneFolder, RevezoneFileTree } from '@renderer/types/file';
 import {
-  getCurrentFileFromLocal,
-  getOpenKeysFromLocal,
-  getSelectedKeysFromLocal
+    getCurrentFileFromLocal,
+    getOpenKeysFromLocal,
+    getSelectedKeysFromLocal
 } from './localstorage';
 
 import { DEFAULT_TAB_JSON_MODEL } from '@renderer/utils/constant';

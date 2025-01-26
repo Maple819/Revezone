@@ -1,3 +1,3 @@
 export interface EditableTextState {
-  [key: string]: boolean;
+    [key: string]: boolean;
 }

@@ -4,17 +4,17 @@ import { workspaceLoadedAtom } from '../../store/jotai';
 import { useAtom } from 'jotai';
 
 interface Props {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export default function WorkspaceLoaded(props: Props) {
-  const [workspaceLoaded, setWorkspaceLoaded] = useAtom(workspaceLoadedAtom);
+    const [workspaceLoaded, setWorkspaceLoaded] = useAtom(workspaceLoadedAtom);
 
-  useEffect(() => {
-    emitter.on(events.WORKSPACE_LOADED, () => {
-      setWorkspaceLoaded(true);
-    });
-  }, []);
+    useEffect(() => {
+        emitter.on(events.WORKSPACE_LOADED, () => {
+            setWorkspaceLoaded(true);
+        });
+    }, []);
 
-  return workspaceLoaded ? props.children : null;
+    return workspaceLoaded ? props.children : null;
 }

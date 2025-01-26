@@ -4,34 +4,34 @@ import { useAtom } from 'jotai';
 import { openKeysAtom } from '@renderer/store/jotai';
 
 export default function useOpenKeys() {
-  const [openKeys, setOpenKeys] = useAtom(openKeysAtom);
+    const [openKeys, setOpenKeys] = useAtom(openKeysAtom);
 
-  const addOpenKeys = useCallback((keys: string[]) => {
-    const openKeys = getOpenKeysFromLocal();
+    const addOpenKeys = useCallback((keys: string[]) => {
+        const openKeys = getOpenKeysFromLocal();
 
-    let notChanged = true;
+        let notChanged = true;
 
-    keys.forEach((key) => {
-      if (!openKeys.includes(key)) {
-        notChanged = false;
-      }
-    });
+        keys.forEach((key) => {
+            if (!openKeys.includes(key)) {
+                notChanged = false;
+            }
+        });
 
-    if (notChanged) return;
+        if (notChanged) return;
 
-    const newKeys = [...openKeys, ...keys].filter((item) => !!item);
+        const newKeys = [...openKeys, ...keys].filter((item) => !!item);
 
-    setOpenKeys(newKeys);
-    setOpenKeysToLocal(newKeys);
-  }, []);
+        setOpenKeys(newKeys);
+        setOpenKeysToLocal(newKeys);
+    }, []);
 
-  const removeOpenKey = useCallback((key: string) => {
-    const openKeys = getOpenKeysFromLocal();
-    const keys = openKeys.filter((_key) => _key !== key);
+    const removeOpenKey = useCallback((key: string) => {
+        const openKeys = getOpenKeysFromLocal();
+        const keys = openKeys.filter((_key) => _key !== key);
 
-    setOpenKeys(keys);
-    setOpenKeysToLocal(keys);
-  }, []);
+        setOpenKeys(keys);
+        setOpenKeysToLocal(keys);
+    }, []);
 
-  return { openKeys, setOpenKeys, addOpenKeys, removeOpenKey };
+    return { openKeys, setOpenKeys, addOpenKeys, removeOpenKey };
 }

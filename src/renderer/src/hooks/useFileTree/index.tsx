@@ -6,41 +6,57 @@ import { blocksuiteStorage } from '@renderer/store/blocksuite';
 import { boardIndexeddbStorage } from '@renderer/store/boardIndexeddb';
 
 export default function useFileTree() {
-  const [fileTree, setFileTree] = useAtom(fileTreeAtom);
+    const [fileTree, setFileTree] = useAtom(fileTreeAtom);
 
-  const getFileTree = useCallback(async () => {
-    const tree = await fileTreeIndexeddbStorage.getFileTree();
+    const getFileTree = useCallback(async () => {
+        const tree = await fileTreeIndexeddbStorage.getFileTree();
 
-    // DEBUG: check files not deleted unexpected
-    if (localStorage.getItem('is_debug') === 'true') {
-      if (tree) {
-        let notes = await blocksuiteStorage.getAllPageIds();
-        notes = notes.filter((id) => !tree[id]);
-        let boards = await boardIndexeddbStorage.getAllBoardIds();
-        boards = boards.filter((id) => !tree[id]);
+        // DEBUG: check files not deleted unexpected
+        if (localStorage.getItem('is_debug') === 'true') {
+            if (tree) {
+                let notes = await blocksuiteStorage.getAllPageIds();
+                notes = notes.filter((id) => !tree[id]);
+                let boards = await boardIndexeddbStorage.getAllBoardIds();
+                boards = boards.filter((id) => !tree[id]);
 
-        tree.root.children = [...((tree.root.children as string[]) || []), ...notes, ...boards];
+                tree.root.children = [
+                    ...((tree.root.children as string[]) || []),
+                    ...notes,
+                    ...boards
+                ];
 
-        notes.forEach((fileId) => {
-          tree[fileId] = {
-            index: fileId,
-            data: { id: fileId, name: fileId, type: 'note', gmtCreate: '', gmtModified: '' }
-          };
-        });
+                notes.forEach((fileId) => {
+                    tree[fileId] = {
+                        index: fileId,
+                        data: {
+                            id: fileId,
+                            name: fileId,
+                            type: 'note',
+                            gmtCreate: '',
+                            gmtModified: ''
+                        }
+                    };
+                });
 
-        boards.forEach((fileId) => {
-          tree[fileId] = {
-            index: fileId,
-            data: { id: fileId, name: fileId, type: 'board', gmtCreate: '', gmtModified: '' }
-          };
-        });
-      }
-    }
+                boards.forEach((fileId) => {
+                    tree[fileId] = {
+                        index: fileId,
+                        data: {
+                            id: fileId,
+                            name: fileId,
+                            type: 'board',
+                            gmtCreate: '',
+                            gmtModified: ''
+                        }
+                    };
+                });
+            }
+        }
 
-    tree && setFileTree(tree);
+        tree && setFileTree(tree);
 
-    return tree;
-  }, []);
+        return tree;
+    }, []);
 
-  return { fileTree, getFileTree, setFileTree };
+    return { fileTree, getFileTree, setFileTree };
 }

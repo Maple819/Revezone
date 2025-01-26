@@ -10,36 +10,36 @@ import useFileTree from '../useFileTree';
 import { tldrawIndexeddbStorage } from '@renderer/store/tldrawIndexeddb';
 
 export default function useDeleteFile() {
-  const { currentFile, updateCurrentFile } = useCurrentFile();
-  const { deleteTab } = useTabJsonModel();
-  const { getFileTree } = useFileTree();
+    const { currentFile, updateCurrentFile } = useCurrentFile();
+    const { deleteTab } = useTabJsonModel();
+    const { getFileTree } = useFileTree();
 
-  const deleteFile = useCallback(
-    async (file: RevezoneFile, tabModel: Model) => {
-      await fileTreeIndexeddbStorage.deleteFile(file.id);
+    const deleteFile = useCallback(
+        async (file: RevezoneFile, tabModel: Model) => {
+            await fileTreeIndexeddbStorage.deleteFile(file.id);
 
-      await deleteTab(file.id, tabModel);
+            await deleteTab(file.id, tabModel);
 
-      if (file.id === currentFile?.id) {
-        updateCurrentFile(undefined);
-      }
+            if (file.id === currentFile?.id) {
+                updateCurrentFile(undefined);
+            }
 
-      switch (file.type) {
-        case 'board':
-          await boardIndexeddbStorage.deleteBoard(file.id);
-          break;
-        case 'tldraw':
-          await tldrawIndexeddbStorage.deleteTldraw(file.id);
-          break;
-        case 'note':
-          await blocksuiteStorage.deletePage(file.id);
-          break;
-      }
+            switch (file.type) {
+                case 'board':
+                    await boardIndexeddbStorage.deleteBoard(file.id);
+                    break;
+                case 'tldraw':
+                    await tldrawIndexeddbStorage.deleteTldraw(file.id);
+                    break;
+                case 'note':
+                    await blocksuiteStorage.deletePage(file.id);
+                    break;
+            }
 
-      await getFileTree();
-    },
-    [fileTreeIndexeddbStorage, currentFile]
-  );
+            await getFileTree();
+        },
+        [fileTreeIndexeddbStorage, currentFile]
+    );
 
-  return { deleteFile };
+    return { deleteFile };
 }

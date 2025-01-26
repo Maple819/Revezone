@@ -1,14 +1,12 @@
 .tldraw-editor-container {
+    /* FIX: text selection background-color problem */
+    .tl-text,
+    .tl-text-input {
+        caret-color: auto;
 
-  /* FIX: text selection background-color problem */
-  .tl-text,
-  .tl-text-input {
-    caret-color: auto;
-
-    &::selection {
-      background-color: #2f80ed;
-      color: #fff;
+        &::selection {
+            background-color: #2f80ed;
+            color: #fff;
+        }
     }
-  }
-
 }

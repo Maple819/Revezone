@@ -123,8 +123,9 @@ function App(): JSX.Element {
     return (
         <ConfigProvider locale={getLocale()} theme={theme}>
             <div
-                className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
-                    }`}
+                className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${
+                    isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
+                }`}
             >
                 <ResizableLayout>
                     <WorkspaceLoaded>

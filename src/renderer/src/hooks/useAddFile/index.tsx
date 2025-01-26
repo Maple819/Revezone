@@ -10,38 +10,38 @@ import { Model } from 'flexlayout-react';
 import { RevezoneFile, RevezoneFileType } from '@renderer/types/file';
 
 export default function useAddFile() {
-  const { getFileTree } = useFileTree();
-  const { updateCurrentFile } = useCurrentFile();
-  const { addOpenKeys } = useOpenKeys();
-  const { updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
+    const { getFileTree } = useFileTree();
+    const { updateCurrentFile } = useCurrentFile();
+    const { addOpenKeys } = useOpenKeys();
+    const { updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
 
-  const addFile = useCallback(
-    async (
-      name: string,
-      type: RevezoneFileType,
-      tabModel: Model | undefined,
-      parentId?: string,
-      fileData?: string
-    ): Promise<RevezoneFile | undefined> => {
-      if (!tabModel) return;
+    const addFile = useCallback(
+        async (
+            name: string,
+            type: RevezoneFileType,
+            tabModel: Model | undefined,
+            parentId?: string,
+            fileData?: string
+        ): Promise<RevezoneFile | undefined> => {
+            if (!tabModel) return;
 
-      const file = await fileTreeIndexeddbStorage.addFile(name, type, parentId, fileData);
+            const file = await fileTreeIndexeddbStorage.addFile(name, type, parentId, fileData);
 
-      parentId && addOpenKeys([parentId]);
-      setRenamingMenuItemIdToLocal(file.id);
+            parentId && addOpenKeys([parentId]);
+            setRenamingMenuItemIdToLocal(file.id);
 
-      getFileTree();
+            getFileTree();
 
-      dbclickMenuTreeItemAfterCreate();
+            dbclickMenuTreeItemAfterCreate();
 
-      updateCurrentFile(file);
+            updateCurrentFile(file);
 
-      updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
+            updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
 
-      return file;
-    },
-    []
-  );
+            return file;
+        },
+        []
+    );
 
-  return { addFile };
+    return { addFile };
 }

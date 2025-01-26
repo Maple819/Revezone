@@ -1,15 +1,14 @@
 .revezone-layout.sidebar-collapsed .excalidraw .App-menu_top {
-  padding-left: 2rem;
+    padding-left: 2rem;
 }
 
 .ant-modal-root {
-
-  .ant-btn-primary {
-    background-color: #1677ff;
-  }
+    .ant-btn-primary {
+        background-color: #1677ff;
+    }
 }
 
-.excalidraw .dropdown-menu .dropdown-menu-item .revezone-app-custom-font-icon{
-  width: 0.8rem;
-  height: 0.8rem;
+.excalidraw .dropdown-menu .dropdown-menu-item .revezone-app-custom-font-icon {
+    width: 0.8rem;
+    height: 0.8rem;
 }

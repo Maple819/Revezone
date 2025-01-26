@@ -8,42 +8,44 @@ import { useAtom } from 'jotai';
 import { RevezoneFile } from '@renderer/types/file';
 
 export default function useDoubleLink(outerJump: boolean) {
-  const [fileTree] = useAtom(fileTreeAtom);
+    const [fileTree] = useAtom(fileTreeAtom);
 
-  const { updateCurrentFile } = useCurrentFile();
-  const { model: tabModel, updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
+    const { updateCurrentFile } = useCurrentFile();
+    const { model: tabModel, updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
 
-  const onLinkOpen = useCallback(
-    async (elementOrLink: NonDeletedExcalidrawElement | string, event?: Event) => {
-      if (event) {
-        event.preventDefault();
-      }
+    const onLinkOpen = useCallback(
+        async (elementOrLink: NonDeletedExcalidrawElement | string, event?: Event) => {
+            if (event) {
+                event.preventDefault();
+            }
 
-      const link = typeof elementOrLink === 'string' ? elementOrLink : elementOrLink.link;
+            const link = typeof elementOrLink === 'string' ? elementOrLink : elementOrLink.link;
 
-      const fileIdOrNameInRevezone = link && getFileIdOrNameFromLink(link);
+            const fileIdOrNameInRevezone = link && getFileIdOrNameFromLink(link);
 
-      if (fileIdOrNameInRevezone) {
-        let file: RevezoneFile | undefined = fileTree[fileIdOrNameInRevezone].data as RevezoneFile;
+            if (fileIdOrNameInRevezone) {
+                let file: RevezoneFile | undefined = fileTree[fileIdOrNameInRevezone]
+                    .data as RevezoneFile;
 
-        if (!file) {
-          file = Object.values(fileTree).find((item) => item.data.name === fileIdOrNameInRevezone)
-            ?.data as RevezoneFile;
-        }
+                if (!file) {
+                    file = Object.values(fileTree).find(
+                        (item) => item.data.name === fileIdOrNameInRevezone
+                    )?.data as RevezoneFile;
+                }
 
-        if (file) {
-          await updateCurrentFile(file);
+                if (file) {
+                    await updateCurrentFile(file);
 
-          updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
-        }
-      } else {
-        if (outerJump) {
-          link && window.open(link);
-        }
-      }
-    },
-    [fileTree, tabModel]
-  );
+                    updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
+                }
+            } else {
+                if (outerJump) {
+                    link && window.open(link);
+                }
+            }
+        },
+        [fileTree, tabModel]
+    );
 
-  return { onLinkOpen, tabModel, fileTree };
+    return { onLinkOpen, tabModel, fileTree };
 }

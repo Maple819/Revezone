@@ -14,39 +14,39 @@ const CONFIG_PATH = join(REVEZONE_APP_CONFIG_DIR, 'config.json');
 const DEFAULT_LOCAL_FILES_STORAGE_PATH = join(USER_DATA_PATH, 'user_files');
 
 export const customStoragePath = async (mainWindow: BrowserWindow) => {
-  const { filePaths: folderPaths } = await dialog.showOpenDialog(mainWindow, {
-    properties: ['openDirectory', 'createDirectory']
-  });
+    const { filePaths: folderPaths } = await dialog.showOpenDialog(mainWindow, {
+        properties: ['openDirectory', 'createDirectory']
+    });
 
-  const destPath = folderPaths?.[0];
+    const destPath = folderPaths?.[0];
 
-  if (!destPath) return;
+    if (!destPath) return;
 
-  ensureDir(REVEZONE_APP_CONFIG_DIR);
+    ensureDir(REVEZONE_APP_CONFIG_DIR);
 
-  writeFileSync(CONFIG_PATH, JSON.stringify({ local_storage_path: destPath }, null, 2));
+    writeFileSync(CONFIG_PATH, JSON.stringify({ local_storage_path: destPath }, null, 2));
 
-  mainWindow.webContents.send(EVENTS.customStoragePathSuccess, destPath);
+    mainWindow.webContents.send(EVENTS.customStoragePathSuccess, destPath);
 };
 
 export const openStoragePath = async (path: string) => {
-  shell.showItemInFolder(path);
+    shell.showItemInFolder(path);
 };
 
 export const showItemInFolder = async (itemId: string, fileTree: RevezoneFileTree) => {
-  const { path } = getFullPathInfo(itemId, fileTree);
+    const { path } = getFullPathInfo(itemId, fileTree);
 
-  shell.showItemInFolder(path);
+    shell.showItemInFolder(path);
 };
 
 export const getUserFilesStoragePath = () => {
-  try {
-    const str = readFileSync(CONFIG_PATH).toString();
+    try {
+        const str = readFileSync(CONFIG_PATH).toString();
 
-    const config = str && JSON.parse(str);
+        const config = str && JSON.parse(str);
 
-    return config.local_storage_path;
-  } catch (err) {
-    return DEFAULT_LOCAL_FILES_STORAGE_PATH;
-  }
+        return config.local_storage_path;
+    } catch (err) {
+        return DEFAULT_LOCAL_FILES_STORAGE_PATH;
+    }
 };
