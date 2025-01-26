@@ -16,10 +16,10 @@ const MultiTabs = lazy(() => import('./components/MultiTabsWithFlexLayout'));
 
 import './App.css';
 import {
-	getFilenameFromPath,
-	getFileNameWithoutSuffix,
-	getFileSuffix,
-	getFileTypeFromSuffix
+    getFilenameFromPath,
+    getFileNameWithoutSuffix,
+    getFileSuffix,
+    getFileTypeFromSuffix
 } from './utils/file';
 import useCurrentFile from './hooks/useCurrentFile';
 import useFileTree from './hooks/useFileTree';
@@ -33,107 +33,107 @@ let associatedFileOpened = false;
 const OS_NAME = getOSName();
 
 function App(): JSX.Element {
-	const [langCode] = useAtom(langCodeAtom);
-	const { addFile } = useAddFile();
-	const { model: tabModel, updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
-	const { updateCurrentFile } = useCurrentFile();
-	const { fileTree } = useFileTree();
+    const [langCode] = useAtom(langCodeAtom);
+    const { addFile } = useAddFile();
+    const { model: tabModel, updateTabJsonModelWhenCurrentFileChanged } = useTabJsonModel();
+    const { updateCurrentFile } = useCurrentFile();
+    const { fileTree } = useFileTree();
 
-	const doOpenFile = useCallback((path: string, fileData: string, tabModel: Model) => {
-		const fileNameWithSuffix = getFilenameFromPath(path);
-		const fileName = fileNameWithSuffix && getFileNameWithoutSuffix(fileNameWithSuffix);
-		const suffix = fileNameWithSuffix && getFileSuffix(fileNameWithSuffix);
-		const fileType = suffix && getFileTypeFromSuffix(suffix);
+    const doOpenFile = useCallback((path: string, fileData: string, tabModel: Model) => {
+        const fileNameWithSuffix = getFilenameFromPath(path);
+        const fileName = fileNameWithSuffix && getFileNameWithoutSuffix(fileNameWithSuffix);
+        const suffix = fileNameWithSuffix && getFileSuffix(fileNameWithSuffix);
+        const fileType = suffix && getFileTypeFromSuffix(suffix);
 
-		if (fileName && fileType) {
-			addFile(fileName, fileType, tabModel, 'root', fileData);
-		} else {
-			message.error(`File ${path} unrecognized!`);
-		}
-	}, []);
+        if (fileName && fileType) {
+            addFile(fileName, fileType, tabModel, 'root', fileData);
+        } else {
+            message.error(`File ${path} unrecognized!`);
+        }
+    }, []);
 
-	useEffect(() => {
-		if (!tabModel || openFileSuccessListenerRegistered) return;
+    useEffect(() => {
+        if (!tabModel || openFileSuccessListenerRegistered) return;
 
-		// avoid listener register multiple times
-		openFileSuccessListenerRegistered = true;
+        // avoid listener register multiple times
+        openFileSuccessListenerRegistered = true;
 
-		window.api?.openFileSuccess((event, path, fileData) => {
-			doOpenFile(path, fileData, tabModel);
-		});
-	}, [tabModel]);
+        window.api?.openFileSuccess((event, path, fileData) => {
+            doOpenFile(path, fileData, tabModel);
+        });
+    }, [tabModel]);
 
-	const updateCurrentFileFromDeepLinkingUrl = useCallback(
-		async (link: string, fileTree: RevezoneFileTree, tabModel: Model) => {
-			const fileId = link?.split('revezone://')[1];
-			const file = fileTree[fileId]?.data as RevezoneFile;
+    const updateCurrentFileFromDeepLinkingUrl = useCallback(
+        async (link: string, fileTree: RevezoneFileTree, tabModel: Model) => {
+            const fileId = link?.split('revezone://')[1];
+            const file = fileTree[fileId]?.data as RevezoneFile;
 
-			if (!file) {
-				message.error(`File ${link} not existed!`);
-				return;
-			}
+            if (!file) {
+                message.error(`File ${link} not existed!`);
+                return;
+            }
 
-			await updateCurrentFile(file);
+            await updateCurrentFile(file);
 
-			updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
-		},
-		[]
-	);
+            updateTabJsonModelWhenCurrentFileChanged(file, tabModel);
+        },
+        []
+    );
 
-	useEffect(() => {
-		if (!tabModel || !(fileTree && JSON.stringify(fileTree) !== '{}')) {
-			return;
-		}
+    useEffect(() => {
+        if (!tabModel || !(fileTree && JSON.stringify(fileTree) !== '{}')) {
+            return;
+        }
 
-		if (!deepLinkUrlOpened) {
-			deepLinkUrlOpened = true;
-			const deepLinkingUrl = window.electron?.process.env.DEEP_LINKING_URL;
+        if (!deepLinkUrlOpened) {
+            deepLinkUrlOpened = true;
+            const deepLinkingUrl = window.electron?.process.env.DEEP_LINKING_URL;
 
-			deepLinkingUrl &&
-				updateCurrentFileFromDeepLinkingUrl(deepLinkingUrl, fileTree, tabModel);
-		}
+            deepLinkingUrl &&
+                updateCurrentFileFromDeepLinkingUrl(deepLinkingUrl, fileTree, tabModel);
+        }
 
-		if (!associatedFileOpened) {
-			associatedFileOpened = true;
+        if (!associatedFileOpened) {
+            associatedFileOpened = true;
 
-			const openFilePath = window.electron?.process.env.OPEN_FILE_PATH;
-			const fileData = window.electron?.process.env.OPEN_FILE_DATA;
+            const openFilePath = window.electron?.process.env.OPEN_FILE_PATH;
+            const fileData = window.electron?.process.env.OPEN_FILE_DATA;
 
-			openFilePath && fileData && doOpenFile(openFilePath, fileData, tabModel);
-		}
+            openFilePath && fileData && doOpenFile(openFilePath, fileData, tabModel);
+        }
 
-		window.api?.removeAllRevezoneLinkListeners();
+        window.api?.removeAllRevezoneLinkListeners();
 
-		window.api?.openRevezoneLinkSuccess(async (event, link) => {
-			link && updateCurrentFileFromDeepLinkingUrl(link, fileTree, tabModel);
-		});
-	}, [fileTree, tabModel]);
+        window.api?.openRevezoneLinkSuccess(async (event, link) => {
+            link && updateCurrentFileFromDeepLinkingUrl(link, fileTree, tabModel);
+        });
+    }, [fileTree, tabModel]);
 
-	const getLocale = useCallback(() => {
-		switch (langCode) {
-			case 'zh-CN':
-				return zhCN;
-			case 'zh-TW':
-				return zhTW;
-			default:
-				return enUS;
-		}
-	}, [langCode]);
+    const getLocale = useCallback(() => {
+        switch (langCode) {
+            case 'zh-CN':
+                return zhCN;
+            case 'zh-TW':
+                return zhTW;
+            default:
+                return enUS;
+        }
+    }, [langCode]);
 
-	return (
-		<ConfigProvider locale={getLocale()} theme={theme}>
-			<div
-				className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
-					}`}
-			>
-				<ResizableLayout>
-					<WorkspaceLoaded>
-						<MultiTabs />
-					</WorkspaceLoaded>
-				</ResizableLayout>
-			</div>
-		</ConfigProvider>
-	);
+    return (
+        <ConfigProvider locale={getLocale()} theme={theme}>
+            <div
+                className={`revezone-app-container os-is-${OS_NAME.toLowerCase()} ${isInRevezoneApp ? 'is-in-revezone-native-app' : 'is-in-browser'
+                    }`}
+            >
+                <ResizableLayout>
+                    <WorkspaceLoaded>
+                        <MultiTabs />
+                    </WorkspaceLoaded>
+                </ResizableLayout>
+            </div>
+        </ConfigProvider>
+    );
 }
 
 export default App;
