@@ -15,5 +15,6 @@ export const EVENTS = {
   addFile: 'add-local-file',
   dragAndDrop: 'drag-and-drop',
   openFileSuccess: 'open-file-success',
-  openRevezoneLinkSuccess: 'open-revezone-link-success'
+  openRevezoneLinkSuccess: 'open-revezone-link-success',
+  changeBackgroundOpacity: 'change-background-opacity'
 };
