@@ -1,3 +1,3 @@
-export const insertAtIndex = (arr, index, item) => {
-    return [...arr].splice(index, 0, item);
+export const insertAtIndex = <T>(arr: T[], index: number, item: T): T[] => {
+    return [...arr.slice(0, index), item, ...arr.slice(index)];
 };

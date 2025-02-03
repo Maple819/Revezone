@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import CustomFonts from '../CustomFonts';
 import { osName } from '@renderer/utils/navigator';
 import StoragePathSetting from '@renderer/components/StoragePathSetting';
+import OpacitySliderComponent from '../OpacitySlider';
 
 interface Props {
     visible: boolean;
@@ -39,6 +40,15 @@ export default function SystemSettings({ visible, setSystemSettingVisible, onCan
                         children: (
                             <div>
                                 <StoragePathSetting />
+                            </div>
+                        )
+                    },
+                    {
+                        key: 'change_opacity',
+                        label: t('opacity.changeOpacity'),
+                        children: (
+                            <div>
+                                <OpacitySliderComponent />
                             </div>
                         )
                     }

@@ -27,6 +27,7 @@ import { GithubCircle, Bilibili } from '@renderer/icons';
 import DownloadApp from '../DownloadApp';
 
 import 'driver.js/dist/driver.css';
+import OpacitySliderComponent from '../OpacitySlider';
 
 interface Props {
     size?: 'small' | 'middle' | 'large';

@@ -67,6 +67,10 @@
         "cloud": "Cloud(Comming soon)",
         "local": "Local"
     },
+    "opacity":{
+        "changeOpacity":"Change opcaity",
+        "nowOpacity":"Now Opacity:"
+    },
     "help": {
         "issue": "Report a issue",
         "contactTheAuthor": "Contact the author"

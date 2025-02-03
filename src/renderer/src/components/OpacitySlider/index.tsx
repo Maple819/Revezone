@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { useState } from 'react';
 
 const OpacitySliderComponent = () => {
@@ -15,8 +16,8 @@ const OpacitySliderComponent = () => {
     };
 
     return (
-        <div className="opacity-control">
-            <label>窗口透明度:</label>
+        <div className="text-gray-500 h-36 flex items-center">
+            <span className="mr-2">{t('opacity.nowOpacity')}</span>
             <input
                 type="range"
                 min="0.2"

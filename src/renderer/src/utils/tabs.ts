@@ -1,7 +1,7 @@
-import { getTabListFromLocal } from '@renderer/store/localstorage';
+import { getTabJsonModelFromLocal } from '@renderer/store/localstorage';
 
 export const getInitialTabList = () => {
-    const tabListFromLocal = getTabListFromLocal();
+    const tabListFromLocal = getTabJsonModelFromLocal();
 
     return tabListFromLocal || [];
 };

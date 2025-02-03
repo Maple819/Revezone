@@ -4,7 +4,7 @@ import { RevezoneFolder, RevezoneFile, RevezoneFileTree, RevezoneFileType } from
 const REVEZONE_LINK_PROTOCOL = 'revezone://';
 const FILE_NAME_REGEX = /^(.+)(\.[a-zA-Z0-9]+)$/;
 
-let timeout;
+let timeout: NodeJS.Timeout;
 
 export const getFileIdOrNameFromLink = (link: string) => {
     if (link.startsWith(REVEZONE_LINK_PROTOCOL)) {
@@ -62,7 +62,7 @@ export const sendFileDataChangeToMainDebounceFn = (
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         console.log('filechange debounce', id);
-        window.api?.fileDataChange(id, data, fileTree);
+        (window as any).api?.fileDataChange(id, data, fileTree);
     }, 1000);
 };
 

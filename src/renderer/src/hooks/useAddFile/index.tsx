@@ -7,9 +7,11 @@ import { setRenamingMenuItemIdToLocal } from '@renderer/store/localstorage';
 import { dbclickMenuTreeItemAfterCreate } from '@renderer/utils/dom';
 import useTabJsonModel from '../useTabJsonModel';
 import { Model } from 'flexlayout-react';
-import { RevezoneFile, RevezoneFileType } from '@renderer/types/file';
+import { OnFolderOrFileAddProps, RevezoneFile, RevezoneFileType } from '@renderer/types/file';
 
-export default function useAddFile() {
+export default function useAddFile(p0?: {
+    onAdd: ({ fileId, folderId, type }: OnFolderOrFileAddProps) => void;
+}) {
     const { getFileTree } = useFileTree();
     const { updateCurrentFile } = useCurrentFile();
     const { addOpenKeys } = useOpenKeys();

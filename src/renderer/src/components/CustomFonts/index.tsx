@@ -14,7 +14,7 @@ import { Font } from '@renderer/types/file';
 import { XSquare } from 'lucide-react';
 import { emitter } from '@renderer/store/eventemitter';
 
-const registeredFontsStr = window.electron?.process.env.registeredFonts;
+const registeredFontsStr = (window as any).electron?.process.env.registeredFonts;
 const registeredFonts: Font[] | undefined = registeredFontsStr && JSON.parse(registeredFontsStr);
 
 interface Props {

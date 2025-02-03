@@ -66,6 +66,10 @@
     "storage": {
         "cloud": "云存储(敬请期待)",
         "local": "本地存储"
+    },    
+    "opacity":{
+        "changeOpacity":"更改透明度",
+        "nowOpacity":"目前透明度:"
     },
     "help": {
         "issue": "提交问题",

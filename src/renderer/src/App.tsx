@@ -131,7 +131,7 @@ function App(): JSX.Element {
                 <ResizableLayout>
                     <WorkspaceLoaded>
                         {/* <MultiTabs /> */}
-                        <OpacitySliderComponent />
+                        maple
                     </WorkspaceLoaded>
                 </ResizableLayout>
             </div>
